@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,14 +8,62 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body ng-app="luisApp">
-    <h2>CRUD in angularJS with localStorage and read data in JSON</h2>
-    <div ng-controller="luisStorage">
 
+<body ng-app="luisApp">
+    <h2 class="center">CRUD in angularJS with localStorage and read data in JSON</h2>
+    <div ng-controller="luisStorage">
+        <form>
+            <div class="form-group">
+                <label>Numero</label>
+                <input type="text" class="form-control" id="numero" placeholder="numero" ng-model="newContacts.numero">
+            </div>
+            <div class="form-group">
+                <label>Nombre</label>
+                <input type="text" class="form-control" id="nombre" placeholder="nombre" ng-model="newContacts.nombre">
+            </div>
+            <div class="form-group">
+                <label>Pais</label>
+                <input type="text" class="form-control" id="pais" placeholder="pais" ng-model="newContacts.pais">
+            </div>
+
+            <button type="submit" class="boton" ng-submit="AddUser()">Submit</button>
+        </form>
+        <table>
+            <tr class="center">
+                <td>Numero</td>
+                <td>Nombre</td>
+                <td>Pais</td>
+                <td>Editar</td>
+                <td>Borrar</td>
+            </tr>
+            <tr ng-repeat="user in users track by $index" class="center">
+
+                <td>
+                    <input type="text" ng-model="user.numero" ng-show="user.editable">
+                    <span ng-hide="user.editable">{{ user.numero }}</span>
+                </td>
+                <td>
+                    <input type="text" ng-model="user.nombre" ng-show="user.editable">
+                    <span ng-hide="user.editable">{{ user.nombre }}</span>
+                </td>
+                <td>
+                    <input type="text" ng-model="user.pais" ng-show="user.editable">
+                    <span ng-hide="user.editable">{{ user.pais }}</span>
+                </td>
+                <td>
+                    <span ng-click="EditUser($index)" ng-hide="user.editable" class="boton">Edit</span>
+                    <span ng-click="SaveUser($index)" ng-show="user.editable" class="boton">Save</span>
+                </td>
+                <td>
+                    <span ng-click="DeleteUser(user)" class="boton">Borrar</span>
+                </td>
+            </tr>
+        </table>
     </div>
-    
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js"></script>
     <script src="app.js"></script>
 </body>
+
 </html>
