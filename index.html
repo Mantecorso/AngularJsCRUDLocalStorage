@@ -1,20 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>CRUD in angularJS</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body ng-app="luisApp">
-    <h2>CRUD in angularJS with localStorage and read data in JSON</h2>
-    <div ng-controller="luisStorage">
 
+<body ng-app="luisApp" class="center">
+    <h2>CRUD in angularJS with localStorage and read data in JSON</h2>
+    <div ng-controller="luisStorage" class="grid">
+        <div>
+            <form class="formulario" id="addnew">
+                <input type="text" id="nombre" class="espace" placeholder="nombre" ng-model="newUser.nombre">
+                <p></p>
+                <input type="text" id="apellido" class="espace" placeholder="apellido" ng-model="newUser.apellido">
+                <p></p>
+                <input type="text" id="curso" class="espace" placeholder="curso" ng-model="newUser.curso">
+                <p></p>
+                <input type="text" id="edad" class="espace" placeholder="edad" ng-model="newUser.edad">
+                <p></p>
+                <button type="submit" value="Add" class="espace" ng-click="addUser()">Anyadir</button>
+            </form>
+        </div>
+        <div class="tabla table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Curso</th>
+                        <th>Edad</th>
+                        <th>Borrar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="user in users track by $index">
+                        <td>{{user.nombre}}</td>
+                        <td>{{user.apellido}}</td>
+                        <td>{{user.curso}}</td>
+                        <td>{{user.edad}}</td>
+                        <td><a href="#" class="boton" ng-click="DeleteContact()">Borrar</a> </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js"></script>
     <script src="app.js"></script>
+    <script>
+        jQuery(function ($) {
+            $('#form_addjts').submit(function () {
+                writeToFile({
+                    id: $(this).find('.id').val,
+                    content: $(this).find('.content').val()
+                });
+                return false;
+            });
+
+            function writeToFile(data) {
+                var fso = new FileHandle("Scripting.FileSystemObject");
+                var fh = fso.OpenTextFile("D:\\newusers.txt", 8);
+                fh.WriteLine(newusers.id + ',' + newusers.content);
+                fh.Close();
+            }
+        });
+    </script>
 </body>
+
 </html>

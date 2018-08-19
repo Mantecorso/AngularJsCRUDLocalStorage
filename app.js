@@ -2,52 +2,27 @@ var app = angular.module("luisApp", []);
 
 app.controller("luisStorage", function ($scope, $http) {
 
+            $scope.newUsers = {};
+            $scope.saved = localStorage.getItem('users');
+        
             $http.get("datos.json").then(function (item) {
-                $scope.users = localStorage.setItem("datos", JSON.stringify(datos));
+            	localStorage.setItem('users', JSON.stringify($http.get("datos.json")));
+                $scope.users = item.data;
             })
-
-            $scope.DeleteUser = function (user) {
-
+        
+            localStorage.setItem('users', JSON.stringify($scope.users));
+        
+            $scope.addUser = function () {
+        
+                $scope.users.push($scope.newUsers);
+                localStorage.setItem('users', JSON.stringify($scope.users));
+                $scope.newUsers = {};
+            };
+        
+            $scope.DeleteContact = function (contact) {
+        
                 var DeleteUser = $scope.users.indexOf(user);
+                localStorage.removeItem('users', JSON.stringify($scope.users));
                 $scope.users.splice(DeleteUser, 1);
             }
-
-            $scope.entity = {}
-            $scope.saved = localStorage.getItem('users');
-
-
-
-
-            $scope.EditUser = function (index) {
-
-                $scope.entity = $scope.users[index];
-                $scope.entity.index = index;
-                $scope.entity.editable = true;
-
-            }
-
-            $scope.SaveUser = function (index) {
-                $scope.users[index].editable = false;
-            }
-
-            $scope.ViewUser = function (user) {
-
-                var ViewUser = $scope.users.indexOf(user);
-                $scope.users.splice(ViewUser, 1);
-            }
-
-            $scope.AddUser = function () {
-
-                $scope.users.push({
-                    numero: $scope.numero,
-                    nombre: $scope.nombre,
-                    pais: $scope.pais
-                })
-
-                $scope.numero = '';
-                $scope.nombre = '';
-                $scope.pais = '';
-            }
-        
-    
 });
